@@ -1,0 +1,5 @@
+language: objective-c
+osx_image: xcode8
+xcode_workspace: Examples/Examples.xcworkspace
+xcode_scheme: Travis
+podfile: Examples/Podfile
