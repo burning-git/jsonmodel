@@ -316,6 +316,8 @@ static JSONKeyMapper* globalKeyMapper = nil;
 
         if ([jsonValue isKindOfClass:property.type]) {
             isValueOfAllowedType = YES;
+        }else{
+            break;
         }
         
         if (isValueOfAllowedType == NO) {
