@@ -314,6 +314,19 @@ static JSONKeyMapper* globalKeyMapper = nil;
         Class jsonValueClass = [jsonValue class];
         BOOL isValueOfAllowedType = NO;
 
+        if ([jsonValue isKindOfClass:property.type]) {
+            isValueOfAllowedType = YES;
+        }
+        
+        if (isValueOfAllowedType == NO) {
+            
+            for (Class allowedType in allowedJSONTypes) {
+                if ( [jsonValueClass isSubclassOfClass: allowedType] ) {
+                    isValueOfAllowedType = YES;
+                    break;
+                }
+            }
+        }
         for (Class allowedType in allowedJSONTypes) {
             if ( [jsonValueClass isSubclassOfClass: allowedType] ) {
                 isValueOfAllowedType = YES;
