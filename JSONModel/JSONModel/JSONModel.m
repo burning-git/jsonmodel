@@ -314,10 +314,15 @@ static JSONKeyMapper* globalKeyMapper = nil;
         Class jsonValueClass = [jsonValue class];
         BOOL isValueOfAllowedType = NO;
 
-        if ([jsonValue isKindOfClass:property.type]) {
-            isValueOfAllowedType = YES;
-        }else{
-            continue;
+        if ([jsonValue isKindOfClass:[NSDictionary class]] || [jsonValue isKindOfClass:[NSArray class]]) {
+            if ([jsonValue isKindOfClass:property.type]) {
+                isValueOfAllowedType = YES;
+
+            }else{
+                continue;
+
+            }
+            
         }
         
         if (isValueOfAllowedType == NO) {
