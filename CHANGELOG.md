@@ -1,5 +1,37 @@
 # Changelog
 
+## v1.7.0 (2016-10-07)
+
+- added generic custom setter method - `setPropertyNameWithJSONObject`
+
+## v1.6.0 (2016-10-05)
+
+- added new built-in key mapper - `mapperForTitleCase`
+
+## v1.5.1 (2016-09-12)
+
+- when a data transformer is missing, we now return an error rather than throwing an exception
+
+## v1.5.0 (2016-09-12)
+
+Minor version bump due to deprecations. No breaking changes.
+
+- lots of improvements to readme/contribution docs
+- deprecated `mapperFromUpperCaseToLowerCase` (not replaced - it didn't really make sense)
+- renamed `mapperFromUnderscoreCaseToCamelCase` to `mapperForSnakeCase` for clarity
+
+## v1.4.2 (2016-09-11)
+
+- change use of `performSelector` to [a safer implementation](https://stackoverflow.com/a/20058585/743957)
+
+## v1.4.1 (2016-09-11)
+
+- restructured custom getter/setter system to resolve crash reported in #436 (thanks @robinzhangx & @hfossli)
+
+## v1.4.0 (2016-08-18)
+
+- deprecated all JSON->Model key mapper methods for consistency's sake - replaced with equivalent Model->JSON methods with clearer naming
+
 ## v1.3.0 (2016-07-22)
 
 Sorry for the long time since the last release. We'll be trying to maintain a

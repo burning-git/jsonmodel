@@ -12,8 +12,8 @@
 
 + (JSONKeyMapper *)keyMapper
 {
-	JSONKeyMapper *base = [JSONKeyMapper mapperFromUpperCaseToLowerCase];
-	return [JSONKeyMapper mapper:base withExceptions:@{@"ID": @"identifier"}];
+	JSONKeyMapper *base = [JSONKeyMapper mapperForTitleCase];
+	return [JSONKeyMapper baseMapper:base withModelToJSONExceptions:@{@"identifier": @"ID"}];
 }
 
 @end
