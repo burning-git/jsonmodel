@@ -1,0 +1,13 @@
+{
+	"rotationVoList" : [
+	{
+	"webUrl" : null,
+	"functionCode" : "",
+	"actionType" : null,
+	"hisCodeInfo" : [
+
+	],
+	"rotationImgUrl" : "http:\/\/hxgyappicon.oss-cn-qingdao.aliyuncs.com\/363zhuye-banner.png"
+	}
+	]
+}

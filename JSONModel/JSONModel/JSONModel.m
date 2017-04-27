@@ -287,11 +287,33 @@ static JSONKeyMapper* globalKeyMapper = nil;
             jsonValue = dict[jsonKeyPath];
         }
 
+      
         //check for Optional properties
         if (isNull(jsonValue)) {
             //skip this property, continue with next property
-            if (property.isOptional || !validation) continue;
-
+            //now
+            if (property.isOptional || !validation)
+                {
+                BOOL isValueOfAllowedType1 = NO;
+                
+                for (Class allowedType in allowedJSONTypes) {
+                    if ( [property.type isSubclassOfClass: allowedType] ) {
+                        isValueOfAllowedType1 = YES;
+                        break;
+                    }
+                }
+                if (isValueOfAllowedType1) {
+                    
+                    //ps 当 值类型。和声明属性类型不一致 时，以声明属性类型 为准
+                    // Class jsonValueClass1 = [jsonValue class];//值类型
+                    id defaultModel = [[property.type alloc] init]; //声明属性类型
+                    
+                    [self setValue:defaultModel forKey:property.name];
+                }
+                continue;
+                }
+            //before 以前没有 初始化值，当遇到 null的时候，直接 continue.并没有给 默认值
+            // if (property.isOptional || !validation) continue;
             if (err) {
                 //null value for required property
                 NSString* msg = [NSString stringWithFormat:@"Value of required model key %@ is null", property.name];
@@ -300,37 +322,28 @@ static JSONKeyMapper* globalKeyMapper = nil;
             }
             return NO;
         }
-
-        Class jsonValueClass = [jsonValue class];
-        BOOL isValueOfAllowedType = NO;
-
-        if ([jsonValue isKindOfClass:[NSDictionary class]] || [jsonValue isKindOfClass:[NSArray class]]) {
-            if ([jsonValue isKindOfClass:property.type]) {
-                isValueOfAllowedType = YES;
-
-            }else{
-                continue;
-
-            }
-            
-        }
         
-        if (isValueOfAllowedType == NO) {
+        
+        
+        Class jsonValueClass = [jsonValue class];
+        
+        if (![property.type isSubclassOfClass:jsonValueClass]) {//值类型 和 声明属性不一致
+            id defaultModel = [[property.type alloc] init]; //声明属性类型
             
-            for (Class allowedType in allowedJSONTypes) {
-                if ( [jsonValueClass isSubclassOfClass: allowedType] ) {
-                    isValueOfAllowedType = YES;
-                    break;
-                }
-            }
+            [self setValue:defaultModel forKey:property.name];
+            
+            continue;
         }
+
+        BOOL isValueOfAllowedType = NO;
+        
         for (Class allowedType in allowedJSONTypes) {
             if ( [jsonValueClass isSubclassOfClass: allowedType] ) {
                 isValueOfAllowedType = YES;
                 break;
             }
         }
-
+        
         if (isValueOfAllowedType==NO) {
             //type not allowed
             JMLog(@"Type %@ is not allowed in JSON.", NSStringFromClass(jsonValueClass));
